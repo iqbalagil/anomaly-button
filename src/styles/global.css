@@ -1,0 +1,35 @@
+@import "tailwindcss";
+
+body {
+    @apply flex items-center justify-center min-h-screen;
+    transition: all 0.3s ease;
+}
+
+.glitch-screen {
+  @apply fixed top-0 left-0 w-full h-full pointer-events-none z-[9999];
+  background: rgba(255, 255, 255, 0.05);
+  animation: glitch 300ms steps(2, end) 1;
+}
+
+@keyframes glitch {
+  0% {
+    transform: translate(0, 0);
+    filter: contrast(1) brightness(1);
+  }
+  20% {
+    transform: translate(5px, -5px);
+    filter: contrast(2) brightness(2);
+  }
+  40% {
+    transform: translate(-5px, 5px);
+    filter: contrast(0.5) brightness(1.5);
+  }
+  60% {
+    transform: translate(3px, -3px);
+    filter: contrast(2) brightness(0.8);
+  }
+  100% {
+    transform: translate(0, 0);
+    filter: contrast(1) brightness(1);
+  }
+}

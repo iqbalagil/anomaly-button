@@ -1,0 +1,112 @@
+---
+let clickCount = 0;
+---
+
+<div class="flex flex-col items-center space-y-4">
+  <button
+    id="anomalyBtn"
+    class="px-6 py-3 rounded-full bg-purple-700 text-white text-xl transition-all duration-300 hover:scale-110"
+  >
+    Anomaly
+  </button>
+
+  <p 
+    id="clickCount" 
+    class="pointer-event-none select-none bg-black/80 text-white px-4 py-2 rounded-full text-lg font-semibold shadow-lg ring-1 ring-white/20 backdrop-blur"
+  >
+    Score: 0
+  </p>
+</div>
+
+<!-- Tempat efek -->
+<div id="anomalyEffects"></div>
+
+<style>
+  @keyframes shake {
+    0% { transform: translate(0px, 0px); }
+    25% { transform: translate(5px, -5px); }
+    50% { transform: translate(-5px, 5px); }
+    75% { transform: translate(3px, -3px); }
+    100% { transform: translate(0px, 0px); }
+  }
+  .shake {
+    animation: shake 300ms ease-in-out;
+  }
+</style>
+
+<script type="module">
+  const btn = document.getElementById('anomalyBtn');
+  const counter = document.getElementById('clickCount');
+  const effectsContainer = document.getElementById('anomalyEffects');
+
+  let count = 0;
+
+  const randomBgColors = ['#1f2937', '#0f172a', '#4c1d95', '#991b1b', '#14532d'];
+
+  const actions = [
+    () => {
+      const div = document.createElement('div');
+      div.className = 'fixed inset-0 bg-white/10 backdrop-blur-sm z-[9999] pointer-events-none animate-pulse';
+      document.body.appendChild(div);
+      setTimeout(() => div.remove(), 300);
+    },
+    () => {
+      document.body.classList.add('shake');
+      setTimeout(() => document.body.classList.remove('shake'), 300);
+    },
+    () => {
+      document.body.style.backgroundColor = randomBgColors[Math.floor(Math.random() * randomBgColors.length)];
+    },
+    () => {
+      const text = document.createElement('div');
+      text.textContent = '⚠️ ANOMALY DETECTED ⚠️';
+      text.className = 'fixed top-10 left-1/2 -translate-x-1/2 bg-red-600 text-white px-4 py-2 rounded shadow-lg z-50 text-xl';
+      document.body.appendChild(text);
+      setTimeout(() => text.remove(), 1000);
+    },
+    () => {
+      const emoji = document.createElement('div');
+      emoji.textContent = '🔥';
+      emoji.style.position = 'fixed';
+      emoji.style.left = Math.random() * 90 + '%';
+      emoji.style.top = Math.random() * 90 + '%';
+      emoji.style.fontSize = '2rem';
+      emoji.style.zIndex = '999';
+      document.body.appendChild(emoji);
+      setTimeout(() => emoji.remove(), 800);
+    },
+    () => {
+      const original = btn.textContent;
+      btn.textContent = '???';
+      setTimeout(() => btn.textContent = original, 700);
+    },
+    () => {
+      btn.classList.add('ring-4', 'ring-pink-500');
+      setTimeout(() => btn.classList.remove('ring-4', 'ring-pink-500'), 500);
+    },
+    () => {
+      const errorLine = document.createElement('div');
+      errorLine.className = 'fixed top-0 w-full h-1 bg-red-500 z-50';
+      document.body.appendChild(errorLine);
+      setTimeout(() => errorLine.remove(), 500);
+    },
+    () => {
+      document.body.style.transform = 'scale(0.9)';
+      setTimeout(() => document.body.style.transform = 'scale(1)', 300);
+    },
+    () => {
+      btn.classList.add('text-red-600');
+      setTimeout(() => btn.classList.remove('text-red-600'), 500);
+    },
+  ];
+
+  btn?.addEventListener('click', () => {
+    // Tambah score
+    count++;
+    counter.textContent = `Score: ${count}`;
+
+    // Jalankan efek acak
+    const randomAction = actions[Math.floor(Math.random() * actions.length)];
+    randomAction();
+  });
+</script>

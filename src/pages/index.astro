@@ -1,4 +1,6 @@
 ---
+import AnomalyButton from "@components/AnomalyButton.astro";
+
 
 ---
 
@@ -8,9 +10,12 @@
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
+		<link rel="stylesheet" href="/src/styles/global.css">
 		<title>Astro</title>
 	</head>
 	<body>
-		<h1>Astro</h1>
+		<main>
+			<AnomalyButton />
+		</main>
 	</body>
 </html>
